@@ -1,37 +1,43 @@
-import express from "express";
-import dotenv from "dotenv";
+import express from 'express';
+import dotenv from 'dotenv';
 
 dotenv.config();
 const app = express();
 const portNumber = process.env.PORT || 3000;
 
-// Middleware para archivos estáticos y EJS
-app.use(express.static("public"));
-app.set("view engine", "ejs");
+// Configuración de archivos estáticos y motor de vistas
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
 
-// Rutas con Arrow Functions y Async/Await (Requisito estricto)
-const getHome = async (req, res) => {
-    res.render("index", { title: "Home" });
-};
+/**
+ * Routes
+ */
 
-const getOrganizations = async (req, res) => {
-    res.render("organizations", { title: "Organizations" });
-};
+// Ruta de Inicio (Home)
+app.get('/', async (req, res) => {
+    const title = 'Home';
+    res.render('index', { title }); // Asegúrate de que el archivo sea index.ejs
+});
 
-const getProjects = async (req, res) => {
-    res.render("projects", { title: "Service Projects" });
-};
+// Ruta de Organizaciones
+app.get('/organizations', async (req, res) => {
+    const title = 'Our Partner Organizations';
+    res.render('organizations', { title });
+});
 
-const getCategories = async (req, res) => {
-    res.render("categories", { title: "Service Categories" });
-};
+// Ruta de Proyectos
+app.get('/projects', async (req, res) => {
+    const title = 'Service Projects';
+    res.render('projects', { title });
+});
 
-// Definición de rutas
-app.get("/", getHome);
-app.get("/organizations", getOrganizations);
-app.get("/projects", getProjects);
-app.get("/categories", getCategories);
+// Ruta de Categorías (Añadida para completar las 4 requeridas)
+app.get('/categories', async (req, res) => {
+    const title = 'Service Categories';
+    res.render('categories', { title });
+});
 
+// Encendido del servidor
 app.listen(portNumber, () => {
     console.log(`Server running at http://localhost:${portNumber}`);
 });
